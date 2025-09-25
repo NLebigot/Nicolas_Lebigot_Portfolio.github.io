@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Projet Codage IA – Étude de cas</title>
+  <style>
+    /* Style sobre et lisible */
+    body { font-family: Arial, sans-serif; line-height: 1.6; padding: 20px; max-width: 800px; margin: auto; background: #fdfdfd; color: #333; }
+    h1 { font-size: 2em; border-bottom: 2px solid #eee; padding-bottom: 0.3em; }
+    h2 { font-size: 1.4em; margin-top: 1.5em; color: #444; }
+    p, li { margin: 0.5em 0; }
+    code { background: #f9f9f9; padding: 0 4px; border-radius: 3px; }
+    pre { background: #f9f9f9; padding: 10px; border: 1px solid #ddd; overflow-x: auto; }
+  </style>
+</head>
+<body>
+
+  <h1>Projet Codage IA</h1>
+  <p><em>Analyse sociologique automatisée d’entretiens (codage qualitatif assisté par IA)</em></p>
+
+  <h2>Introduction et Objectif</h2>
+  <p><strong>Projet_Codage_IA</strong> est un outil visant à automatiser le codage qualitatif d’entretiens en utilisant un modèle d’intelligence artificielle. L’objectif est de produire, à partir de transcriptions d’entretiens (fichiers PDF), une <strong>grille thématique</strong> structurée comprenant des <strong>thèmes</strong>, des <strong>codes</strong> (sous-thèmes) et des <strong>verbatims</strong> (citations textuelles). Ce processus, habituellement manuel et chronophage en sociologie, est ici accéléré grâce à Python et à l’API Groq (modèle de langage).</p>
+  <p>Entièrement développé en Python, le projet fonctionne en local (scripts exécutés en ligne de commande) et ne nécessite pas d’hébergement web. Chaque entretien est traité automatiquement et génère en sortie des fichiers texte et CSV contenant la grille thématique correspondante. L’ensemble du code a été écrit sur mesure, de la segmentation du texte source jusqu’à l’export des résultats structurés.</p>
+
+  <h2>Stack utilisée</h2>
+  <ul>
+    <li><strong>Langage :</strong> Python 3 (scripts standalone exécutés en local)</li>
+    <li><strong>API IA :</strong> Groq API (appel à un modèle de langage <em>large language model</em> pour le codage thématique)</li>
+    <li><strong>Librairies Python :</strong> 
+      <ul>
+        <li><code>python-dotenv</code> (chargement de la clé API depuis un fichier <code>.env</code>)</li>
+        <li><code>PyPDF2</code> (lecture et extraction de texte des PDF de transcription)</li>
+        <li><code>re</code> (expressions régulières pour segmenter le texte et parser les résultats)</li>
+        <li><code>pandas</code> (structuration des données et export en CSV)</li>
+      </ul>
+    </li>
+    <li><strong>Environnement :</strong> Exécution locale hors ligne, résultats enregistrés dans des fichiers (pas d’interface web)</li>
+  </ul>
+
+  <h2>Description des scripts</h2>
+  <ul>
+    <li><strong>decodeur.py :</strong> Script principal interactif qui réalise l’analyse d’un entretien. Il lit le fichier PDF de transcription sélectionné, **segmente** le texte en blocs de taille raisonnable (pour éviter les limites d’API) en se basant sur les tours de parole, puis envoie chaque segment au modèle d’IA via l’API Groq. Le prompt fourni à l’IA la guide pour produire une **grille de codage** : environ 4–5 thèmes par segment, chacun contenant ~10 codes avec leur verbatim associé. La réponse de l’IA pour chaque segment est sauvegardée dans un fichier texte (ex: `NomEntretien_segment_1.txt`, `..._segment_2.txt`, etc.).</li>
+    <li><strong>ranger.py :</strong> Script de post-traitement qui consolide les résultats d’un entretien. Il parcourt tous les fichiers texte générés pour un même entretien, **extrait** les thèmes, codes et verbatims à l’aide d’expressions régulières, et les assemble dans une structure tabulaire. Les doublons de citations sont éliminés (au cas où un même verbatim apparaîtrait dans plusieurs segments). Enfin, les données sont exportées en un fichier CSV unique (ex: `NomEntretien_grille_thematique.csv`) récapitulant la grille thématique complète de l’entretien.</li>
+    <li><strong>decodeur_2.py :</strong> (Optionnel) Script de **synthèse transversale** qui permet de combiner plusieurs grilles d’entretiens. Il rassemble les résultats de plusieurs entretiens (regroupés par dossier, par ex. `groupe_1`, `groupe_2`…) et sollicite à nouveau l’IA pour produire une grille thématique de synthèse englobant tous les entretiens du groupe. Le modèle est invité à dégager 4–5 thèmes communs et 10 codes par thème en fusionnant les données multi-entretien, sans dupliquer les verbatims.</li>
+    <li><strong>range_2.py :</strong> Script de post-traitement pour les synthèses de groupe. Il fonctionne de manière similaire à <code>ranger.py</code> : parcours les fichiers texte de synthèse générés par <code>decodeur_2.py</code>, extrait thèmes/codes/verbatims et produit un fichier CSV par groupe (ex: `groupe_1_grille_thematique.csv`) contenant la grille de synthèse consolidée.</li>
+  </ul>
+
+  <h2>Exemple de structure de sortie</h2>
+  <p>Le format de sortie est une liste hiérarchisée de thèmes contenant chacun leurs codes et verbatims illustratifs. Par exemple, voici un extrait (simplifié) de grille thématique générée pour un entretien :</p>
+  <pre><code>Thème 1 : Parcours Universitaire et Professionnel
+- Code 1 : Formation Académique
+  - Verbatim : "J'ai obtenu un baccalauréat économique et social en 2019."
+- Code 2 : Expérience en Alternance
+  - Verbatim : "J'ai effectué un bachelor en 3 ans, une année en initial et les deux dernières années en tant que business développeur dans une start-up."
+... (Codes 3 à 10)</code></pre>
+  <p>Dans cet extrait de sortie, on voit un thème principal (<em>Parcours Universitaire et Professionnel</em>) regroupant plusieurs codes (sous-thèmes) tels que <em>Formation Académique</em> ou <em>Expérience en Alternance</em>, chacun étant illustré par un verbatim tiré de l’entretien. Chaque entretien génère typiquement 4 à 6 thèmes de ce type, chacun comprenant jusqu’à 10 codes et citations.</p>
+
+  <h2>Défis rencontrés et choix techniques</h2>
+  <ul>
+    <li><strong>Segmentation du texte :</strong> Les transcriptions d’entretiens pouvant être volumineuses, il a fallu les segmenter en morceaux avant envoi à l’API (limite d’environ 5000 caractères par segment pour éviter les erreurs type *Payload Too Large*). La segmentation s’est faite en respectant les changements de locuteur pour conserver du contexte cohérent dans chaque segment.</li>
+    <li><strong>Conception du prompt (prompt engineering) :</strong> Un soin particulier a été apporté à la rédaction de l’instruction donnée à l’IA afin d’obtenir un codage thématique exploitable. Le prompt guide le modèle pas à pas (nombre de thèmes requis, nombre de codes, structure de sortie attendue, etc.) et l’incite à varier les thèmes d’un segment à l’autre pour couvrir un maximum d’angles d’analyse sans répétition.</li>
+    <li><strong>Parsing des résultats AI :</strong> Les réponses de l’IA sont renvoyées sous forme de texte structuré (markdown). Il a fallu implémenter un **parseur** robuste (via des regex en Python) pour extraire correctement chaque thème, code et verbatim, malgré d’éventuelles variations mineures de format. Ce choix évite d’avoir à coder manuellement l’analyse de texte brut et s’appuie sur la structure imposée via le prompt.</li>
+    <li><strong>Consolidation et élimination des doublons :</strong> Lors du regroupement des segments d’un même entretien, une étape de nettoyage avec **pandas** supprime les verbatims en doublon. En effet, un même extrait de réponse peut parfois être repris dans deux segments adjacents ; le fait de ne le garder qu’une fois dans la grille finale garantit la concision et la clarté de l’analyse.</li>
+    <li><strong>Synthèse multi-entretien :</strong> Pour aller plus loin, la possibilité de synthétiser plusieurs entretiens en une grille commune a été ajoutée. Le défi ici était de fusionner des grilles thématiques différentes tout en obtenant une structure cohérente et globale. La solution retenue a été de réutiliser l’IA avec un prompt adapté pour qu’elle regroupe les thèmes similaires et sélectionne les codes/verbatims les plus pertinents à travers les entretiens. Cette approche a nécessité de bien gérer la taille des données en entrée (d’où un traitement par segments de fichiers CSV, inférieur à 30k caractères chacun) et de valider que l’IA ne biaise pas la synthèse (vérification manuelle des résultats).</li>
+  </ul>
+
+  <h2>Code et résultats</h2>
+  <ul>
+    <li><strong>Dépôt GitHub :</strong> Le code source complet du projet est disponible sur <a href="https://github.com/NLebigot/Projet_Codage_IA" target="_blank" rel="noopener">GitHub – NLebigot/Projet_Codage_IA</a>. Vous y trouverez les scripts Python (<code>decodeur.py</code>, <code>ranger.py</code>, etc.) ainsi que des exemples de fichiers de résultats.</li>
+    <li><strong>Exemple de résultat :</strong> Un exemple de grille thématique exportée (fichier CSV) est visible dans le dépôt (<code>resultats/D2SN1_grille_thematique.csv</code>). Ce fichier illustre le format tabulaire final regroupant toutes les paires thème–code–verbatim extraites d’un entretien.</li>
+  </ul>
+
+</body>
+</html>
