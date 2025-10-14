@@ -1,109 +1,125 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <title>Mon Portfolio – NLebigot</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      background: #f4f4f9;
-      color: #333;
-    }
-    header {
-      background: #2c3e50;
-      color: white;
-      padding: 40px 20px;
-      text-align: center;
-    }
-    header h1 { margin: 0; font-size: 2.5em; }
-    header p { font-size: 1.2em; }
-    main {
-      max-width: 1000px;
-      margin: 40px auto;
-      padding: 0 20px;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 20px;
-    }
-    .card {
-      background: white;
-      border-radius: 10px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-      padding: 20px;
-      text-align: center;
-      transition: transform 0.2s;
-    }
-    .card:hover { transform: translateY(-5px); }
-    .card img {
-      width: 100%;
-      border-radius: 10px;
-      margin-bottom: 15px;
-    }
-    .card h3 { margin: 10px 0; }
-    .card p { font-size: 0.9em; color: #555; }
-    .card a {
-      display: inline-block;
-      margin-top: 10px;
-      padding: 8px 15px;
-      background: #2c3e50;
-      color: white;
-      text-decoration: none;
-      border-radius: 5px;
-      transition: background 0.2s;
-    }
-    .card a:hover { background: #1a252f; }
-    footer {
-      text-align: center;
-      padding: 20px;
-      margin-top: 40px;
-      background: #2c3e50;
-      color: white;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <title>Mon Portfolio – NLebigot</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background: #f4f4f9;
+            color: #333;
+        }
+        header {
+            background: #2c3e50;
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+        }
+        header h1 {
+            margin: 0;
+            font-size: 2.5em;
+        }
+        header p {
+            font-size: 1.2em;
+        }
+        main {
+            max-width: 1000px;
+            margin: 40px auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        .card {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+            padding: 20px;
+            text-align: center;
+            transition: transform 0.2s;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        .card img, .card video {
+            width: 100%;
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+        .card h3 {
+            margin: 10px 0;
+        }
+        .card p {
+            font-size: 0.9em;
+            color: #555;
+        }
+        .card a {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 8px 15px;
+            background: #2c3e50;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background 0.2s;
+        }
+        .card a:hover {
+            background: #1a252f;
+        }
+        footer {
+            text-align: center;
+            padding: 20px;
+            margin-top: 40px;
+            background: #2c3e50;
+            color: white;
+        }
+    </style>
 </head>
 <body>
-
-  <header>
-    <h1>Bienvenue sur mon Portfolio</h1>
-    <p>Je suis NLebigot, développeur débutant. Voici mes projets :</p>
-  </header>
-
-  <main>
-      <!-- Carte 1 : Projet CityBike NYC -->
-  <div class="card">
-    <img src="CityBike_NY.jpeg" alt="Carte du réseau CityBike NYC">
-    <h3>Projet CityBike NYC – Analyse de réseau</h3>
-    <p>Étude des flux de mobilité à New York à partir des données du service CityBike. 
-    Analyse Python et visualisation du réseau des stations les plus actives avec Gephi.</p>
-    <a href="https://github.com/NLebigot/CityBike_NYC_Analyse" target="_blank">Voir le code</a>
-  </div>
-
-
-      <!-- Carte : Projet Machine Learning -->
-  <div class="card">
-    <img src="https://via.placeholder.com/400x200?text=Machine+Learning" alt="Projet Machine Learning">
-    <h3>Projet Machine Learning – Prédiction de maladies cardiaques</h3>
-    <p>Comparaison de plusieurs modèles d’apprentissage automatique (Régression Logistique, Random Forest, XGBoost, Réseau de Neurones) pour la prédiction de maladies cardiaques à partir de données médicales.</p>
-    <a href="https://github.com/NLebigot/Machine_Learning" target="_blank">Voir le code</a>
-  </div>
-
-
-
-    <!-- Carte 3 : Projet Codage IA -->
-    <div class="card">
-      <img src="https://via.placeholder.com/400x200" alt="Capture du projet Codage IA">
-      <h3>Projet Codage IA</h3>
-      <p>Script Python exploitant l’API Groq pour analyser automatiquement des transcriptions d’entretiens et générer des grilles thématiques sociologiques.</p>
-      <a href="https://github.com/NLebigot/Projet_Codage_IA" target="_blank">Voir le code</a>
-      <a href="projet_codage_ia.html" style="margin-left:8px;" target="_blank">Étude de cas</a>
-    </div>
-  </main>
-
-  <footer>
-    <p>&copy; 2025 NLebigot - Mon Portfolio</p>
-  </footer>
-
+    <header>
+        <h1>Bienvenue sur mon Portfolio</h1>
+        <p>Je suis NLebigot, développeur débutant. Voici mes projets :</p>
+    </header>
+    <main>
+        <!-- Carte 1 : Projet CityBike NYC -->
+        <div class="card">
+            <img src="CityBike_NY.jpeg" alt="Carte du réseau CityBike NYC">
+            <h3>Projet CityBike NYC – Analyse de réseau</h3>
+            <p>Étude des flux de mobilité à New York à partir des données du service CityBike. Analyse Python et visualisation du réseau des stations les plus actives avec Gephi.</p>
+            <a href="https://github.com/NLebigot/CityBike_NYC_Analyse" target="_blank">Voir le code</a>
+        </div>
+        
+        <!-- Carte : Projet Machine Learning -->
+        <div class="card">
+            <img src="https://via.placeholder.com/400x200?text=Machine+Learning" alt="Projet Machine Learning">
+            <h3>Projet Machine Learning – Prédiction de maladies cardiaques</h3>
+            <p>Comparaison de plusieurs modèles d'apprentissage automatique (Régression Logistique, Random Forest, XGBoost, Réseau de Neurones) pour la prédiction de maladies cardiaques à partir de données médicales.</p>
+            <a href="https://github.com/NLebigot/Machine_Learning" target="_blank">Voir le code</a>
+        </div>
+        
+        <!-- Carte 3 : Projet Codage IA -->
+        <div class="card">
+            <img src="https://via.placeholder.com/400x200" alt="Capture du projet Codage IA">
+            <h3>Projet Codage IA</h3>
+            <p>Script Python exploitant l'API Groq pour analyser automatiquement des transcriptions d'entretiens et générer des grilles thématiques sociologiques.</p>
+            <a href="https://github.com/NLebigot/Projet_Codage_IA" target="_blank">Voir le code</a>
+            <a href="projet_codage_ia.html" style="margin-left:8px;" target="_blank">Étude de cas</a>
+        </div>
+        
+        <!-- Carte : Deep Reinforcement Learning -->
+        <div class="card">
+            <!-- Aperçu vidéo (silencieux, boucle) -->
+            <video src="videos/cartpole_eval.mp4" muted autoplay loop playsinline style="width:100%;border-radius:10px;margin-bottom:15px;"></video>
+            <h3>Deep Reinforcement Learning – Exercices</h3>
+            <p>Apprentissage progressif du Deep RL avec deux environnements classiques : <em>CartPole</em> et <em>LunarLander</em>. Notebooks d'entraînement + courtes vidéos d'évaluation.</p>
+            <a href="https://github.com/NLebigot/DeepRL_Playground" target="_blank" rel="noopener">Voir le code</a>
+            <a href="projet_deeprl.html" target="_blank" rel="noopener" style="margin-left:8px;">Étude de cas</a>
+        </div>
+    </main>
+    <footer>
+        <p>&copy; 2025 NLebigot - Mon Portfolio</p>
+    </footer>
 </body>
 </html>
